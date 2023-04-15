@@ -1,1 +1,6 @@
 example/jupynotex.*
+example/*.pdf
+__pycache__
+*.aux
+*.log
+_minted-*
