@@ -10,6 +10,7 @@ jobs:
     container:
       image: archlinux:base
     env:
+      DEPENDENCIES: "texlive-science minted"
       JUPYNOTEX_ENV: jupynotex
 
     steps:
@@ -17,6 +18,5 @@ jobs:
       - name: Install jupynotex
         run: |
           pacman -Syu --noconfirm
-          pacman -S texlive-science minted --noconfirm
-          ls -l /usr/share/texmf-dist/tex/latex/${JUPYNOTEX_ENV}
-          env
+          pacman -S $DEPENDENCIES --noconfirm
+          ls -l $(kpsewhich -var-value TEXMFDIST)/tex/latex/$JUPYNOTEX_ENV
