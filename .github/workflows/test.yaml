@@ -14,13 +14,15 @@ jobs:
       JUPYNOTEX_ENV: jupynotex
       FADES_AUR: https://aur.archlinux.org/cgit/aur.git/snapshot/fades.tar.gz
       BUILD_USER: build
+      BUILDDIR: "/tmp"
 
     steps:
       - uses: actions/checkout@v3
       - name: Install jupynotex and fades
         run: |
           useradd -l -s /bin/bash $BUILD_USER
-          pacman -Syu --noconfirm && pacman -S $DEPENDENCIES --noconfirm
+          pacman -Syu --noconfirm && pacman -S $DEPENDENCIES --noconfirm >/dev/null
+          chown -R $BUILD_USER:$BUILD_USER /$BUILDDIR
           curl -LO $FADES_AUR && tar -xvf fades.tar.gz && pushd fades && su $BUILD_USER -c "makepkg -si --noconfirm" && popd
           JUPYNOTEX_PATH=$(kpsewhich -var-value TEXMFDIST)/tex/latex/$JUPYNOTEX_ENV
           echo Files founded over $JUPYNOTEX_PATH [1/3]
