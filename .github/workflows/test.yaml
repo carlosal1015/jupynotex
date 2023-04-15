@@ -8,18 +8,22 @@ jobs:
   build_latex:
     runs-on: ubuntu-22.04
     container:
-      image: archlinux:base
+      image: archlinux:base-devel
     env:
       DEPENDENCIES: "texlive-science minted"
       JUPYNOTEX_ENV: jupynotex
+      FADES_AUR: https://aur.archlinux.org/cgit/aur.git/snapshot/fades.tar.gz
 
     steps:
       - uses: actions/checkout@v3
-      - name: Install jupynotex
+      - name: Install jupynotex and fades
         run: |
-          pacman -Syu --noconfirm
-          pacman -S $DEPENDENCIES --noconfirm
+          pacman -Syu --noconfirm && pacman -S $DEPENDENCIES --noconfirm
+          curl -LO $FADES_AUR && tar -xvf fades.tar.gz && pushd fades && makepkg -si --noconfirm && popd
           JUPYNOTEX_PATH=$(kpsewhich -var-value TEXMFDIST)/tex/latex/$JUPYNOTEX_ENV
-          echo Files founded over $JUPYNOTEX_PATH
+          echo Files founded over $JUPYNOTEX_PATH [1/3]
           ls -l $JUPYNOTEX_PATH
+          echo Patching [2/3]
           mv $JUPYNOTEX_ENV.* $JUPYNOTEX_PATH
+          echo Testing [3/3]
+          ./run_tests
