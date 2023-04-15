@@ -2,7 +2,7 @@ name: Arch Linux Test CI
 
 on:
   push:
-    branches: [main]
+    branches: [trunk, feature/archlinux-compatibility]
 
 jobs:
   build_latex:
