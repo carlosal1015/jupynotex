@@ -17,6 +17,6 @@ jobs:
       - name: Install jupynotex
         run: |
           pacman -Syu --noconfirm
-          pacman -S texlive-science --noconfirm
+          pacman -S texlive-science minted --noconfirm
           ls -l /usr/share/texmf-dist/tex/latex/${JUPYNOTEX_ENV}
           env
