@@ -21,6 +21,7 @@ jobs:
       - name: Install jupynotex and fades
         run: |
           useradd -l -s /bin/bash $BUILD_USER
+          echo "${BUILD_USER} ALL=(ALL) ALL" > /etc/sudoers.d/$BUILD_USER
           pacman -Syu --noconfirm && pacman -S $DEPENDENCIES --noconfirm >/dev/null
           chown -R $BUILD_USER:$BUILD_USER .
           su $BUILD_USER -c "curl -LO $FADES_AUR && tar -xvf fades.tar.gz && pushd fades && makepkg -si --noconfirm && popd"
