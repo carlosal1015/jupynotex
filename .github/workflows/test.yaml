@@ -24,8 +24,9 @@ jobs:
           echo "${BUILD_USER} ALL=(ALL) ALL" > /etc/sudoers.d/$BUILD_USER
           pacman -Syu --noconfirm && pacman -S $DEPENDENCIES --noconfirm >/dev/null
           chown -R $BUILD_USER:$BUILD_USER .
-          su $BUILD_USER -c "curl -LO $FADES_AUR && tar -xvf fades.tar.gz && pushd fades && makepkg -si --noconfirm && popd"
+          su $BUILD_USER -c "curl -LO $FADES_AUR && tar -xvf fades.tar.gz && pushd fades && makepkg -s --noconfirm && popd"
           chown -R root:root .
+          ls -l fades
           JUPYNOTEX_PATH=$(kpsewhich -var-value TEXMFDIST)/tex/latex/$JUPYNOTEX_ENV
           echo Files founded over $JUPYNOTEX_PATH [1/2]
           ls -l $JUPYNOTEX_PATH
