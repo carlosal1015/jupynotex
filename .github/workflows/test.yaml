@@ -12,7 +12,6 @@ jobs:
     env:
       DEPENDENCIES: "texlive-science minted"
       JUPYNOTEX_ENV: jupynotex
-      JUPYNOTEX_PATH: $(kpsewhich -var-value TEXMFDIST)/tex/latex/$JUPYNOTEX_ENV
 
     steps:
       - uses: actions/checkout@v3
@@ -20,6 +19,7 @@ jobs:
         run: |
           pacman -Syu --noconfirm
           pacman -S $DEPENDENCIES --noconfirm
+          JUPYNOTEX_PATH=$(kpsewhich -var-value TEXMFDIST)/tex/latex/$JUPYNOTEX_ENV
           echo Files founded over $JUPYNOTEX_PATH
           ls -l $JUPYNOTEX_PATH
           mv $JUPYNOTEX_ENV.* $JUPYNOTEX_PATH
