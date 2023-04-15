@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-22.04
     container:
       image: archlinux:base
+    env:
+      JUPYNOTEX_ENV: jupynotex
 
     steps:
       - uses: actions/checkout@v3
@@ -16,5 +18,5 @@ jobs:
         run: |
           pacman -Syu --noconfirm
           pacman -S texlive-science --noconfirm
-          pacman -Ql texlive-science
-          ls
+          ls -l /usr/share/texmf-dist/tex/latex/${JUPYNOTEX_ENV}
+          env
