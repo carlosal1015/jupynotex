@@ -20,3 +20,5 @@ jobs:
           pacman -Syu --noconfirm
           pacman -S $DEPENDENCIES --noconfirm
           ls -l $(kpsewhich -var-value TEXMFDIST)/tex/latex/$JUPYNOTEX_ENV
+          pwd
+          ls
