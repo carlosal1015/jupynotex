@@ -18,6 +18,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install jupynotex and fades
         run: |
+          cat /etc/passwd
           pacman -Syu --noconfirm && pacman -S $DEPENDENCIES --noconfirm
           curl -LO $FADES_AUR && tar -xvf fades.tar.gz && pushd fades && su nobody -c "makepkg -si --noconfirm" && popd
           JUPYNOTEX_PATH=$(kpsewhich -var-value TEXMFDIST)/tex/latex/$JUPYNOTEX_ENV
