@@ -23,12 +23,14 @@ jobs:
           useradd -l -s /bin/bash $BUILD_USER
           pacman -Syu --noconfirm && pacman -S $DEPENDENCIES --noconfirm >/dev/null
           chown -R $BUILD_USER:$BUILD_USER .
-          curl -LO $FADES_AUR && tar -xvf fades.tar.gz && pushd fades && su $BUILD_USER -c "makepkg -si --noconfirm" && popd
+          su $BUILD_USER -c "curl -LO $FADES_AUR && tar -xvf fades.tar.gz && pushd fades && makepkg -si --noconfirm && popd"
           chown -R root:root .
           JUPYNOTEX_PATH=$(kpsewhich -var-value TEXMFDIST)/tex/latex/$JUPYNOTEX_ENV
-          echo Files founded over $JUPYNOTEX_PATH [1/3]
+          echo Files founded over $JUPYNOTEX_PATH [1/2]
           ls -l $JUPYNOTEX_PATH
-          echo Patching [2/3]
+          echo Patching [2/2]
           mv $JUPYNOTEX_ENV.* $JUPYNOTEX_PATH
-          echo Testing [3/3]
+
+      - name: Test
+        run: |
           ./run_tests
